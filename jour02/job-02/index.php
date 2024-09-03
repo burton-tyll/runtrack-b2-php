@@ -1,6 +1,12 @@
 <?php  
 
-    function find_one_student($bdd, string $email): array{
+require_once('bdd.php');
+
+    $database = new Bdd();
+    $bdd = $database->getConnection();
+
+    function find_one_student(string $email): array{
+        global $bdd;
         $query = 'SELECT * FROM student WHERE email = :email';
         $stmt = $bdd->prepare($query);
         $stmt->execute([':email' => $email]);
@@ -8,16 +14,11 @@
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    $host = 'localhost';
-    $user = 'root';
-    $password = 'root';
-    $dbname = 'lp_official';
 
-    $bdd = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
 
    if(isset($_GET['input-email-student'])){
         $email = $_GET['input-email-student'];
-        $student = find_one_student($bdd, $email);
+        $student = find_one_student($email);
    }
 
 ?>

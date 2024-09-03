@@ -1,6 +1,12 @@
 <?php  
 
-    function find_all_students($bdd): array{
+    require_once('bdd.php');
+
+    $database = new Bdd();
+    $bdd = $database->getConnection();
+
+    function find_all_students(): array{
+        global $bdd;
         $query = 'SELECT * FROM student';
         $stmt = $bdd->prepare($query);
         $stmt->execute();
@@ -24,7 +30,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-
         table{
             border-collapse: collapse;
             width: 100%;
